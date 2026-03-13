@@ -15,6 +15,7 @@ const movieRoutes = require('./routes/movieRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
 const favorityRoutes = require('./routes/favorityRoutes')
 const watchRoutes = require('./routes/watchRoutes')
+const homeRoutes = require('./routes/homeRoutes')
 
 app.use(express.json())
 app.use(cookieParser())
@@ -29,6 +30,7 @@ app.use('/api/movies', movieRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/favorities', favorityRoutes)
 app.use('/api/watch', watchRoutes)
+app.use('/api/home', homeRoutes)
 
 sequelize.sync()
 .then(() => {

@@ -1,4 +1,5 @@
 const { movie, category } = require('../models')
+const { Op } = require('sequelize')
 
 class MovieRepository {
 
@@ -53,6 +54,23 @@ class MovieRepository {
 
         return await movie.findAll({
             where:{ categoryId }
+        })
+    }
+
+    async search(query){
+
+        return await movie.findAll({
+            where:{
+                title:{
+                    [Op.like]: `%${query}%`
+                }
+            },
+            attributes:[
+                'id',
+                'title',
+                'coverImage',
+                'videoUrl'
+            ]
         })
     }
 }

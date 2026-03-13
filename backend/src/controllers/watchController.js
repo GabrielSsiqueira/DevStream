@@ -1,3 +1,4 @@
+const { continueWatching } = require('../repositories/watchRepository')
 const watchService = require('../services/watchService')
 
 class WatchController{
@@ -35,6 +36,22 @@ class WatchController{
             return res.status(404).json({
                 error: error.message
             })
+        }
+    }
+
+    async continueWatching(req,res){
+
+        try{
+
+            const userId = req.userId
+            
+            const movies = await watchService.continueWatching(userId)
+
+            return res.json(movies)
+        }catch(error){
+            return res.status(404).json({
+                error: error.message
+            }) 
         }
     }
 }

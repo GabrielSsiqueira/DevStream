@@ -13,6 +13,18 @@ class MovieController {
         
     }
 
+    async search(req, res){
+        try{
+            const { q } = req.query
+
+            const movies = await movieService.search(q)
+
+            return res.json(movies)
+        }catch(error){
+            return res.status(404).json({ error: error.message })
+        }
+    }
+
     async list(req, res) {
         try{
             const movies = await movieService.listMovies()

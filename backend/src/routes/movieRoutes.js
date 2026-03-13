@@ -8,6 +8,7 @@ const movieController = require('../controllers/movieController')
 const router = express.Router()
 
 router.post('/create', auth, admin, validate(movieSchema), movieController.create)
+router.get('/search', auth, movieController.search)
 router.get('/list', auth, admin, movieController.list)
 router.get('/view/:id', movieController.getById)
 router.put('/update/:id', auth, admin, validate(movieSchema), movieController.update)

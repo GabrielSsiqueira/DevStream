@@ -1,4 +1,5 @@
 const { watchHistory, movie } = require('../models')
+    const { Op } = require('sequelize')
 
 class WatchRepository{
 
@@ -31,6 +32,21 @@ class WatchRepository{
                 model: movie
             },
             order: [['watchedAt', 'DESC']]
+        })
+    }
+
+    async continueWatching(userId){
+        
+        return await watchHistory.findAll({
+            where:{
+                userId,
+                progress:{ [Op.gt]: 0 }
+            },
+            include: {
+                model: movie
+            },
+            order:[['watchedAt', 'DESC']],
+            limit: 10
         })
     }
 }

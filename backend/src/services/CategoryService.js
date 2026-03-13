@@ -42,18 +42,6 @@ class CategoryRepository {
 
         return {message: 'Categoria deletada'}
     }
-
-    async home() {
-
-        const categories = await categoryRepository.findWithMovies()
-
-        return categories.filter(category => 
-            category.Movies.length > 0).map(category => ({
-                category: category.name,
-                movies: category.Movies
-            })
-        )
-    }
 }
 
 module.exports = new CategoryRepository()

@@ -68,17 +68,6 @@ class CategoryController {
         }
     }
 
-    async home(req, res){
-        try{
-            const data = await categoryService.home()
-
-            return res.status(201).json(data)
-        }catch(error){
-            return res.status(400).json({error: error.message})
-        }
-
-        
-    }
 }
 
 module.exports = new CategoryController()

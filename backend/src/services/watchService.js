@@ -21,6 +21,11 @@ class WatchService{
     async history(userId){
         return watchRepository.findByUser(userId)
     }
+
+    async continueWatching(userId){
+
+        return await watchRepository.continueWatching(userId)
+    }
 }
 
 module.exports = new WatchService()

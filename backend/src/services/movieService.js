@@ -7,6 +7,15 @@ class MovieService {
         return await movieRepository.create(movieData)
     }
 
+    async search(query){
+
+        if(!query){
+            throw new Error('pesquisa não existe')
+        }
+
+        return await movieRepository.search(query)
+    }
+
     async listMovies() {
 
         return await movieRepository.findAll()
