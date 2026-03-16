@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { Menu, Settings, HelpCircle, LogOut } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../context/AuthContext"
+import { useUserContext } from "../../context/AuthContext"
 
 export default function Navbar({toggleSidebar}){
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-    const { logout } = useAuth()
+    const Navigate = useNavigate()
+    const { user } = useUserContext()
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen)
@@ -13,7 +14,7 @@ export default function Navbar({toggleSidebar}){
 
     const handleLogout = () => {
         // Adicione sua lógica de logout aqui
-        logout()
+        Navigate("/login")
         setIsDropdownOpen(false)
     }
 

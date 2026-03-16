@@ -8,6 +8,7 @@ const router = express.Router()
 
 router.post('/register', validate(registerSchema), userController.register)
 router.get('/list', userController.list)
+router.get('/profile', userController.profile)
 router.post('/login', auth, validate(loginSchema), userController.login)
 router.get('/view/:id', userController.getById)
 router.put('/update/:id', userController.update)

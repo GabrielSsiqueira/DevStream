@@ -1,4 +1,5 @@
 const userService = require('../services/userServices')
+const jwt = require('../utils/jwt')
 
 class UserController {
 
@@ -11,6 +12,11 @@ class UserController {
         }catch(error){
             return res.status(400).json({error: error.message})
         }
+    }
+
+    async profile(req,res){
+        const userInfo = await jwt.verify(req)
+        res.json(userInfo)
     }
 
     async login(req, res){

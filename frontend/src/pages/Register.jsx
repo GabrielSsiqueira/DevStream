@@ -1,38 +1,45 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import { useUserContext } from "../context/AuthContext"
+import  api from "../api/api"
 
-export default function Login() {
-    const { user, setUser } = useUserContext()
+export default function Register() {
     const Navigate = useNavigate()
-
-   const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const { setUser } = useUserContext();
+    
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [ redirect, setRedirect ] = useState(false);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(email && password){
+        console.log(nome, email, password);
+
+        if(nome && email && password){
             try{
 
-                const { data: userDoc }  = await api.post('/users/login', {
+                const { data: userDoc }  = await api.post('/users/register', {
+                    name,
                     email,
                     password
                 });
 
                 setUser(userDoc);
+                setRedirect(true);
     
             }catch(error){
-                alert(`deu um erro ao logar: ${error.response.data}`);
+                alert(`deu um erro ao criar usuario: ${JSON.stringify(error)}`);
             }
         }else{
-            alert('voce precisa preencher email e senha!');
+            alert('voce precisa preencher nome, email e senha!');
         }
 
     };
 
-    if(redirect || user){
+    if(redirect){
         return <Navigate to="/" />
     }
 
@@ -45,6 +52,15 @@ export default function Login() {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-gray-300 mb-1">Nome</label>
+                        <input type="text" 
+                            placeholder="digite seu nome"
+                            value={name}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" />
+                    </div>
+
                     <div>
                         <label className="block text-gray-300 mb-1">Email</label>
                         <input type="email" 
@@ -64,19 +80,13 @@ export default function Login() {
                     </div>
 
                     <button type="submit" className="w-full bg-red-500 hpver:bg-red-600 transition py-2 rounded font-semibold">
-                        Entrar
+                        Criar Conta
                     </button>
 
                     <p className="text-center text-gray-400 mt-6 text-sm">
-                        Não tem conta? {" "}
-                        <Link to="/register" className="text-red-500 hover:underline">Criar Conta.</Link>
+                        já tem uma conta? {" "}
+                        <Link to="/login" className="text-red-500 hover:underline">Faça login.</Link>
                     </p>
-
-                    <div className="text-center">
-                        <Link to="forgot-password" className="text-sm text-gray-400 hover:text-red-500">
-                           Esqueceu a senha?
-                        </Link>
-                    </div>
                    
                 </form>
             </div>
